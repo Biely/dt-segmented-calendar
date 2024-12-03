@@ -1,0 +1,45 @@
+<import-sjs from="./util.sjs" name="sjs"></import-sjs>
+
+<view class="monthCalendar">
+  <view class="calendar_info" a:if="{{ selectedMonth }}">
+    <text class="year">{{ selectedMonth.split('-')[0] }}</text>
+    <text class="month">{{ selectedMonth.split('-')[1] * 1 }}月</text>
+    <text a:if="{{sjs.showBackToMonthBtn(calendarSwiperDates,current)}}" class="backToCurMonth" style="color: {{dateActiveColor}}" onTap="goToDate">回到本月</text>
+  </view> 
+  <!-- 月历轮播 -->
+  <view class="calendar_swiper">
+    <swiper 
+    circular
+    style="height: {{cellHeight + 20 + 'rpx'}};"
+    current="{{current}}"
+    duration="{{duration}}"
+    skip-hidden-item-layout="{{true}}"
+    onChange="onChangeSwiper">
+      <swiper-item a:for="{{calendarSwiperDates}}" a:for-item="swiper" a:for-index="swiperIndex"  key="{{swiperIndex}}" class="swiper-item">
+        <view class="month_box">
+          <view
+          a:for="{{ swiper }}"
+          a:for-index="monthIndex"
+          a:for-item="monthInfo"
+          key="{{monthIndex}}"
+          class="calendar_month__box" 
+          >
+            <view class="calendar_month {{ sjs.isSelected(selectedMonth,monthInfo,emitTimer)? 'isSelected':'' }}"
+              style="
+              height: {{cellHeight + 'rpx'}};
+									width: {{cellHeight + 'rpx'}};
+									borderRadius: {{cellHeight / 2 + 'rpx'}};
+									background-color: {{sjs.isSelected(selectedMonth,monthInfo,emitTimer) ? dateActiveColor : ''}}
+              "
+              data-monthInfo="{{monthInfo}}"
+              onTap="chooseMonth"
+            >
+            <text style="color: {{monthInfo.isCurMonth && !sjs.isSelected(selectedMonth,monthInfo,emitTimer) ? dateActiveColor : 'inherit'}}">{{ monthInfo.month }}月</text>
+            <view class="calendar_month__isCurMonth" a:if="{{monthInfo.isCurMonth}}" style="background-color: {{dateActiveColor}}; border-radius: {{cellHeight / 2 + 'rpx' }}"></view>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>

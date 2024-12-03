@@ -1,0 +1,25 @@
+{
+  "name": "dt-segmented-calendar",
+  "version": "1.0.0",
+  "description": "仿钉钉打卡统计日周月分段日期选择组件",
+  "main": "src/index.js",
+  "miniprogram": "src",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "钉钉小程序",
+    "支付宝小程序",
+    "钉钉",
+    "打卡",
+    "统计",
+    "日历",
+    "日周月"
+  ],
+  "author": "gaayean",
+  "license": "ISC",
+  "dependencies": {
+    "antd-mini": "^2.36.7",
+    "dingtalk-design-miniapp": "^1.9.7"
+  }
+}

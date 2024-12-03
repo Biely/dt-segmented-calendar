@@ -1,0 +1,46 @@
+<import-sjs from="./util.sjs" name="sjs"></import-sjs>
+
+<view class="weekCalendar">
+  <view class="calendar_info" a:if="{{ curDate }}">
+    <text class="year">{{ sjs.getAssignDateInfo(curDate,0) }}</text>
+    <text class="month_date">{{ weekActiveDateRange }}</text>
+    <text a:if="{{sjs.showBackToWeekBtn(curDate)}}" class="backToCurWeek" style="color: {{dateActiveColor}}" onTap="goToDate">回到本周</text>
+  </view>
+  <!-- 周历轮播 -->
+  <view class="calendar_swiper">
+    <swiper
+				circular
+				style="height: {{swiperHeight}};"
+				current="{{current}}"
+				duration="{{duration}}"
+				skip-hidden-item-layout="{{true}}"
+				onChange="onChangeSwiper"
+			>
+      <swiper-item a:for="{{3}}" a:for-item="swiper" a:for-index="swiperIndex"  key="{{swiperIndex}}" class="swiper-item">
+        <view class="week_box">
+          <view
+							a:for="{{calendarSwiperDates[swiperIndex]}}"
+              a:for-index="weekIndex"
+              a:for-item="weekInfo"
+							key="{{weekIndex}}"
+							class="calendar_week__box"
+						>
+            <view
+								class="calendar_week {{ sjs.isSelected(weekInfo, weekIndex, weekActiveIndex, weekDateRange, emitTimer)? 'isSelected': '' }}"
+								style="
+									height: {{cellHeight + 'rpx'}};
+									border-radius: {{cellHeight / 2 + 'rpx'}};
+									background-color: {{sjs.isSelected(weekInfo, weekIndex, weekActiveIndex, weekDateRange, emitTimer) ? dateActiveColor : ''}};
+								"
+                data-weekInfo="{{weekInfo}}"
+								onTap="chooseWeek"
+							>
+              <text style="color: {{weekInfo.isCurWeek && !sjs.isSelected(weekInfo, weekIndex, weekActiveIndex, weekDateRange, emitTimer) ? dateActiveColor : 'inherit'}}">第{{ ['一', '二', '三', '四', '五', '六'][weekIndex] }}周</text>
+								<view class="calendar_week__isCurWeek" a:if="{{weekInfo.isCurWeek}}" style="background-color: {{dateActiveColor}}; border-radius: {{cellHeight / 2 + 'rpx' }};"></view>
+              </view>
+          </view>
+        </view>
+      </swiper-item>
+  </swiper>
+  </view>
+</view>

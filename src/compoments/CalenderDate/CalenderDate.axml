@@ -1,0 +1,54 @@
+<import-sjs from="./util.sjs" name="sjs"></import-sjs>
+
+<view class="dateCalender">
+  <view class="calendar_info" a:if="{{selectedDate}}">
+    <text class="year">{{ sjs.getAssignDateInfo(selectedDate,0) }}</text>
+    <text class="month_date">{{ sjs.getAssignDateInfo(selectedDate,1).toString().padStart(2, '0') }}.{{ sjs.getAssignDateInfo(selectedDate, 2).toString().padStart(2, '0') }}</text>
+    <text a:if="{{ sjs.showBackToTodayBtn(selectedDate,today) }}" class="backToToday" style="color: {{dateActiveColor}}" data-today="{{today}}" onTap="goToDate">回到今天</text>
+  </view>
+  <!-- 日历周数 -->
+  <view class="calendar_week">
+    <view a:for="{{week}}" key="{{index}}" class="calendar_week__item">{{ item }}</view>
+  </view>
+  <view class="calendar_swiper">
+    <swiper
+				circular
+				style="height: {{swiperHeight}};"
+				current="{{current}}"
+				duration="{{duration}}"
+				skip-hidden-item-layout="{{true}}"
+				onChange="onChangeSwiper"
+			>
+      <swiper-item a:for="{{3}}" a:for-item="swiper" a:for-index="swiperIndex"  key="{{swiperIndex}}" class="swiper-item">
+        <view class="date_box">
+          <view a:for="{{getcurCalendarDates[swiperIndex]}}"
+          a:for-item="dateInfo"
+          a:for-index="dateIndex"
+          key="{{dateIndex}}"
+          class="calendar_date__box">
+          <view
+            class="calendar_date {{sjs.dateActiveIndex(emitTimer,getcurCalendarDates[swiperIndex],selectedDate) === dateIndex && dateInfo.type === 'cur'?'isSelected':''}}"
+            style="
+              height: {{cellHeight + 'rpx'}};
+              width: {{cellHeight + 'rpx'}};
+              color: {{swiperMode === 'open' ? dateInfo.type === 'cur' ? '#2C2C2C' : '#959595' : '#2C2C2C'}};
+              background-color:{{sjs.dateActiveIndex(emitTimer,getcurCalendarDates[swiperIndex],selectedDate) === dateIndex && dateInfo.type === 'cur' ? dateActiveColor : ''}};
+            "
+            data-dateInfo="{{dateInfo}}"
+            onTap="chooseDate"
+          >
+            <view class="calendar_date__number" style="color: {{dateInfo.isToday ? dateActiveColor : 'inherit'}};">{{ dateInfo.date }}</view>
+            <view class="calendar_date__isToday" a:if="{{dateInfo.isToday}}" style="{ background-color: {{dateActiveColor}} }"></view>
+            <view class="calendar_date__cricle"></view>
+          </view>
+        </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <!-- 日历切换模式 -->
+  <view class="calendar_toggle" onTap="swiperModeChange">
+    <!-- <view class="icon" :class="{down: swiperMode === 'close'}"></view> -->
+    <ant-icon type="{{swiperMode === 'close'?'UpOutline':'DownOutline'}}"></ant-icon>
+  </view>
+</view>

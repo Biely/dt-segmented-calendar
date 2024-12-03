@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "ant-container": "antd-mini/es/Container/index",
+    "segmented-control": "dingtalk-design-miniapp/es/segmented-control/index",
+    "calender-date": "./compoments/CalenderDate/CalenderDate",
+    "calender-week": "./compoments/CalenderWeek/CalenderWeek",
+    "calender-month": "./compoments/CalenderMonth/CalenderMonth"
+  }
+}

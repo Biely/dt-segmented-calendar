@@ -1,0 +1,26 @@
+<view class="customCalender"> 
+  <!-- 日历顶部信息 -->
+  <!-- <view class="mode_change">
+    <view a:for="{{modeList}}" key="{{index}}" class="mode {{index===mode?active:''}}" data-index="{{index}}" onTap="setMode">{{ item }}</view>
+  </view> -->
+  <ant-container>
+    <view slot="title">
+      <slot name="title" />
+    </view>
+    <view slot="headerRight">
+      <segmented-control
+        texts={{modeList}}
+        active="{{mode}}"
+        onTap="setMode"
+      />
+    </view>
+    <view class="content">
+      <calender-date a:if="{{ modeList[mode] === '日' }}" onChange="dateChange"></calender-date>
+      <calender-week a:if="{{ modeList[mode] === '周' }}" onChange="weekChange"></calender-week>
+      <calender-month a:if="{{ modeList[mode] === '月'}}" onChange="monthChange"></calender-month>
+      <!-- <ant-divider a:if="{{mode!==0}}"></ant-divider> -->
+      <slot name="content"></slot>
+    </view>
+  </ant-container>
+  <!-- <date a:if="{{ mode === 0 }}" change="dateChange"></date> -->
+</view>
